@@ -3,9 +3,12 @@ from rest_framework.response import Response
 from .models import Project, Pledge
 from .serializers import ProjectSerializer, PledgeSerializer,ProjectDetailSerializer
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, permissions
+from .permissions import IsOwnerOrReadOnly, IsPledgeSupporter
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class ProjectList(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get(self, request):
         projects = Project.objects.all()
@@ -23,9 +26,16 @@ class ProjectList(APIView):
     
 class ProjectDetail(APIView):
 
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    ]
+
     def get_object(self, pk):
         try:
-            return Project.objects.get(pk=pk)
+            project = Project.objects.get(pk=pk)
+            self.check_object_permissions(self.request, project)
+            return project
         except Project.DoesNotExist:
             raise Http404
         
@@ -34,11 +44,26 @@ class ProjectDetail(APIView):
         serializer = ProjectDetailSerializer(project)
         return Response(serializer.data)
     
-    # Would this work??
-    # def patch(self, request, pk):
-    #     project = self.get_object(pk)
+    def put(self, request, pk):
+        project = self.get_object(pk)
+        serializer = ProjectDetailSerializer(
+            instance=project,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
 
 class PledgeList(APIView):
+    # Check this is correct
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get(self, request):
         pledges = Pledge.objects.all()
@@ -47,13 +72,39 @@ class PledgeList(APIView):
     
     def post(self, request):
         serializer = PledgeSerializer(data=request.data)
+        
         if serializer.is_valid():
-            serializer.save()
+            # Check this is correct
+            serializer.save(supporter=self.request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
             )
+        
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+# Is this Correct??
+class PledgeDetail(APIView):
+    permission_classes = [IsPledgeSupporter]
+
+    def get_object(self, pk):
+        try:
+            return Pledge.objects.get(pk=pk)
+        except Pledge.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        pledge = self.get_object(pk)
+        serializer = PledgeSerializer(pledge)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        pledge = self.get_object(pk)
+        serializer = PledgeSerializer(pledge, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
