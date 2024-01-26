@@ -33,6 +33,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ProjectDetailSerializer(ProjectSerializer):
+    # Serialiser added for total sum of pledges for a project
+    total_amount = serializers.ReadOnlyField()
     pledges = PledgeSerializer(many=True, read_only=True)
 
     def update(self, instance, validated_data):
