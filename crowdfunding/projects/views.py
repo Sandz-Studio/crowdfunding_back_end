@@ -30,7 +30,6 @@ class ProjectDetail(APIView):
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly
     ]
-
     def get_object(self, pk):
         try:
             project = Project.objects.get(pk=pk)
@@ -59,6 +58,11 @@ class ProjectDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+    # Added delete function to delete a project.
+    def delete(self, request, pk):
+        project = self.get_object(pk)
+        project.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class PledgeList(APIView):

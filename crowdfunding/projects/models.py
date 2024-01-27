@@ -15,12 +15,17 @@ class Project(models.Model):
     )
     # Check this CODE!
     # Calculate total sum of pledges for a project using a property
-    @property
-    def total_amount(self):
-        result = 0
-        for each_pledge in self.pledges:
-            result += each_pledge.amount
-        return result
+    # @property
+    # def total_amount(self):
+    #     result = 0
+    #     for each_pledge in self.pledges:
+    #         result += each_pledge.amount
+    #     return result
+
+    # Alternative solition using a property?
+    # @property
+    # def total(self):
+    #     return self.pledges.aggregate(sum=models.Sum('amount'))['sum']
 
 
 class Pledge(models.Model):
