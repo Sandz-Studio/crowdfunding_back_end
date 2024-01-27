@@ -16,6 +16,8 @@ class CustomUserList(APIView):
         serializer = CustomUserSerializer(users, many=True)
         return Response(serializer.data)
     
+    # A user cannot make another user but not sure how to fix.
+    # POST Method to display error (403 Forbidden)?
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
