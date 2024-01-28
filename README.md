@@ -1,6 +1,6 @@
 # Crowdfunding Back End
 ## Sandra Lopez
-![]( crowdfunding/crowdfunding/static/GrassrootsGoalsLogo.png )
+![]( crowdfunding/static/GrassrootsGoalsLogo.png )
 
 ## Planning:
 ### Grassroots Goals
@@ -73,23 +73,23 @@ Create a new project
 
 ### API Spec
 
-![]( crowdfunding/crowdfunding/static/DRFapi.png )
+![]( crowdfunding/static/DRFapi.png )
 
 
 ### DB Schema
-![]( crowdfunding/crowdfunding/static/DRFschema.png )
+![]( crowdfunding/static/DRFschema.png )
 
-![]( crowdfunding/crowdfunding/static/erd.png )
+![]( crowdfunding/static/erd.png )
 
 ### INSOMNIA
 Successful GET request
-![]( crowdfunding/crowdfunding/static/GETprojects.png )
+![]( crowdfunding/static/GETprojects.png )
 
 Successful POST request
-![]( crowdfunding/crowdfunding/static/POSTpledges.png )
+![]( crowdfunding/static/POSTpledges.png )
 
 Successful TOKEN return
-![]( crowdfunding/crowdfunding/static/returnedtoken.png )
+![]( crowdfunding/static/returnedtoken.png )
 
 
 
