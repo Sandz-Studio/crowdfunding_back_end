@@ -7,6 +7,9 @@ ENV PYTHONUNBUFFERED 1
 
 RUN mkdir -p /code
 
+RUN ls -la /path/to/your/static/directory/
+RUN python manage.py collectstatic --noinput
+
 WORKDIR /code
 
 COPY requirements.txt /tmp/requirements.txt
