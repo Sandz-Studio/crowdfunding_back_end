@@ -72,23 +72,25 @@ Create a new project
 
 ### API Spec
 
-![]( crowdfunding/images/DRFapi.png )
+![]( crowdfunding/staticfiles/rest_framework/img/DRFapi.png )
 
 
 ### DB Schema
-![]( crowdfunding/images/DRFschema.png )
+![]( crowdfunding/staticfiles/rest_framework/img/DRFschema.png )
 
-![]( crowdfunding/images/erd.png )
+![]( crowdfunding/staticfiles/rest_framework/img/erd.png )
 
 ### INSOMNIA
 Successful GET request
-![]( crowdfunding/images/GETprojects.png )
+![]( crowdfunding/staticfiles/rest_framework/img/GETprojects.png )
 
 Successful POST request
-![]( crowdfunding/images/POSTpledges.png )
+![]( crowdfunding/staticfiles/rest_framework/img/POSTpledges.png )
 
 Successful TOKEN return
-![]( crowdfunding/images/returnedtoken.png )
+![]( crowdfunding/staticfiles/rest_framework/img/returnedtoken.png )
+
+
 
 ### Project Requirements
 
